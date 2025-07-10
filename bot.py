@@ -1,6 +1,7 @@
 from aiogram import Bot, Dispatcher, types
 from aiogram.filters import Command, Filter
 from aiogram.types import ContentType
+from aiohttp import web
 import asyncio
 import aiosqlite
 import json
@@ -71,6 +72,14 @@ async def add_user_if_not_exists(user_id: int, username: str):
         )
         await db.commit()
 
+async def handle_get_balance(request):
+    data = await request.json()
+    user_id = data.get("user_id")
+    if not user_id:
+        return web.json_response({"error": "no user_id"}, status=400)
+    
+    balance = await get_balance(int(user_id))
+    return web.json_response({"balance": balance})  
 
 async def get_balance(user_id: int):
     async with aiosqlite.connect("bot_database.db") as db:
@@ -89,7 +98,19 @@ async def update_balance(user_id: int, amount: int):
 
 
 async def main():
+    # Удаляем старый вебхук
     await bot.delete_webhook(drop_pending_updates=True)
+
+    # Создаём aiohttp-сервер
+    app = web.Application()
+    app.add_routes([web.post("/get_balance", handle_get_balance)])
+
+    runner = web.AppRunner(app)
+    await runner.setup()
+    site = web.TCPSite(runner, '0.0.0.0', 8080)  # 8080 — порт, можно поменять
+    await site.start()
+
+    # Запускаем бота
     await dp.start_polling(bot)
 
 

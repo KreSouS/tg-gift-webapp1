@@ -1,22 +1,66 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Подарки</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>Подарки 🎁</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #f0f0f0;
+      margin: 0;
+      padding: 30px;
+    }
+
+    h1 {
+      margin-bottom: 10px;
+    }
+
+    button {
+      font-size: 18px;
+      padding: 10px 20px;
+      margin: 10px;
+      border-radius: 10px;
+      border: none;
+      background-color: #4CAF50;
+      color: white;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      background-color: #aaa;
+      cursor: not-allowed;
+    }
+
+    #balance {
+      font-size: 24px;
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    ul#history {
+      list-style: none;
+      padding: 0;
+    }
+
+    ul#history li {
+      font-size: 18px;
+      margin-top: 5px;
+    }
+  </style>
 </head>
 <body>
-  <h1>🎁 Виртуальные подарки</h1>
-  <p>Ваш баланс: <span id="balance">0</span> монет</p>
-  <h2>Баланс: <span id="balance">0</span> монет</h2>
+  <h1>🎁 Добро пожаловать!</h1>
+  <div>Твой баланс: <span id="balance">0</span> монет</div>
 
-  <button onclick="earnCoins()">💰 Получить монеты</button>
-  <button onclick="openCase()">📦 Открыть кейс (10 монет)</button>
+  <button onclick="earnCoins()">💰 Заработать монеты</button>
+  <button onclick="openCase()">🎁 Открыть кейс (-10 монет)</button>
 
-  <h2>🧾 История подарков:</h2>
+  <h2>📜 История подарков:</h2>
   <ul id="history"></ul>
 
   <script src="script.js"></script>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </body>
 </html>
+
