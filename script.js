@@ -6,8 +6,12 @@ function updateUI() {
 }
 
 function earnCoins() {
-  const earned = Math.floor(Math.random() * 5) + 1; // 1–5 монет
+  const earned = Math.floor(Math.random() * 6) + 5; // 5–10 монет
   balance += earned;
+
+  // Отправляем данные боту
+  Telegram.WebApp.sendData(JSON.stringify({ reward: earned }));
+
   alert(`Вы получили ${earned} монет!`);
   updateUI();
 }
@@ -24,3 +28,4 @@ function openCase() {
 }
 
 updateUI();
+
